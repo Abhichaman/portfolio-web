@@ -1,6 +1,7 @@
 pipeline {
-    agent any
-
+   agent {
+        label 'node-01'
+    }
     environment {
         DEPLOY_PATH = '/var/www/html'
     }
