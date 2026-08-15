@@ -25,13 +25,7 @@ pipeline {
             }
         }
 
-        stage('Reload Nginx') {
-            steps {
-                echo 'Reloading Nginx web server...'
-               
-                sh 'sudo systemctl reload nginx || sudo service nginx reload'
-            }
-        }
+       
     }
 
     post {
