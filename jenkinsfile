@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    environment {
+        DEPLOY_PATH = '/var/www/html'
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                echo 'Pulling code from GitHub repository...'
+               
+          
+            }
+        }
+
+        stage('Deploy to Nginx') {
+            steps {
+                echo "Deploying index.html to ${DEPLOY_PATH}..."
+                
+              
+                sh """
+                    cp -f index.html ${DEPLOY_PATH}/
+                """
+            }
+        }
+
+        stage('Reload Nginx') {
+            steps {
+                echo 'Reloading Nginx web server...'
+               
+                sh 'sudo systemctl reload nginx || sudo service nginx reload'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment Successful! Visit your server IP to see the website.'
+        }
+        failure {
+            echo 'Deployment Failed. Check permissions or Nginx service status.'
+        }
+    }
+}
